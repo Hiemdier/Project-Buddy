@@ -35,6 +35,19 @@ const typeDefs = `
         projectId: ID!
     }
 
+    type ChatLog {
+        _id: ID!
+        projectId: ID!
+        messages: [Message!]!
+        createdAt: String!
+    }
+
+    type Message {
+        sender: String!
+        message: String!
+        timestamp: String!
+    }
+
     type Query {
         getAllUsers: [User]
         getUserById(id: ID!): User
@@ -46,6 +59,9 @@ const typeDefs = `
         getMaterialById(id: ID!): Material
         getAllTasks: [Task]
         getTaskById(id: ID!): Task
+        getChatLogById(id: ID!): ChatLog
+        getChatLogsByProjectId(projectId: ID!): [ChatLog]
+        getChatLogs: [ChatLog]
     }
 
     type Mutation {
@@ -68,6 +84,10 @@ const typeDefs = `
         createTask(name: String!, description: String!, projectId: ID!): Task
         updateTask(id: ID!, name: String, description: String, projectId: ID): Task
         deleteTask(id: ID!): Task
+
+        createChatLog(projectId: ID!, messages: [MessageInput!]!): ChatLog
+        updateChatLog(id: ID!, messages: [MessageInput!]!): ChatLog
+        deleteChatLog(id: ID!): ChatLog
     }
 `;
 
