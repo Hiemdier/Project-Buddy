@@ -2,7 +2,7 @@ import { useState, type FormEvent, type ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useMutation } from '@apollo/client';
-import { ADD_USER } from '../utils/mutations';
+import { CREATE_USER } from '../utils/mutations';
 
 import Auth from '../utils/auth';
 import React from 'react';
@@ -13,7 +13,7 @@ const Signup = () => {
     email: '',
     password: '',
   });
-  const [addUser, { error, data }] = useMutation(ADD_USER);
+  const [addUser, { error, data }] = useMutation(CREATE_USER);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -29,7 +29,7 @@ const Signup = () => {
 
     try {
       const { data } = await addUser({
-        variables: { input: { ...formState } },
+        variables: { ...formState  },
       });
 
       Auth.login(data.addUser.token);

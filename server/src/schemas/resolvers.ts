@@ -4,6 +4,7 @@ import Material from '../models/Material.js';
 import Task from '../models/Task.js';
 import UserModel from '../models/User.js';
 import ChatLog from '../models/Message.js';
+import { signToken } from '../utils/auth.js';
 
 interface User {
     _id: string;
@@ -108,17 +109,19 @@ const resolvers = {
         getChatLogById: async (_: any, { id }: { id: string }) => {
             return await ChatLog.findById(id);
         },
-        getChatLogByProjectId: async (_: any, { projectId }: { projectId: string }) => {
+        getChatLogsByProjectId: async (_: any, { projectId }: { projectId: string }) => {
             return await ChatLog.findOne({ projectId });
         },
         getChatLogs: async () => {
             return await ChatLog.find();
         }
     },
-    Mutations: {
-        createUser: async (_: any, { User }: { User: User }) => {
-            const newUser = new UserModel(User);
-            return await newUser.save();
+    Mutation: {
+        createUser: async (_: any, args : { email: string, password: string, username: string }) => {
+            const newUser = new UserModel(args);
+            newUser.save();
+            const token = signToken(newUser.username, newUser.email, newUser._id);
+            return { user: newUser, token };
         },
         updateUser: async (_: any, { id, User }: { id: string; User: User }) => {
             return await UserModel.findByIdAndUpdate(id, User, { new: true });

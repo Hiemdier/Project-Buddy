@@ -47,6 +47,16 @@ const typeDefs = `
         message: String!
         timestamp: String!
     }
+    type Auth {
+        token: ID!
+        user: User
+    }
+    
+    input MessageInput {
+        sender: String!
+        message: String!
+        timestamp: String!
+    }
 
     type Query {
         getAllUsers: [User]
@@ -65,7 +75,7 @@ const typeDefs = `
     }
 
     type Mutation {
-        createUser(username: String!, email: String!, password: String!): User
+        createUser(username: String!, email: String!, password: String!): Auth
         updateUser(id: ID!, username: String, email: String, password: String): User
         deleteUser(id: ID!): User
 
@@ -85,8 +95,8 @@ const typeDefs = `
         updateTask(id: ID!, name: String, description: String, projectId: ID): Task
         deleteTask(id: ID!): Task
 
-        createChatLog(projectId: ID!, messages: [MessageInput!]!): ChatLog
-        updateChatLog(id: ID!, messages: [MessageInput!]!): ChatLog
+        createChatLog(projectId: ID!, messages: [MessageInput]!): ChatLog
+        updateChatLog(id: ID!, messages: [MessageInput]!): ChatLog
         deleteChatLog(id: ID!): ChatLog
     }
 `;
