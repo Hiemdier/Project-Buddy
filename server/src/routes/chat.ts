@@ -34,6 +34,10 @@ router.post('/', async (req: Request, res: Response) => {
             return res.json({
                 reply: `The price of ${material.name} is $${material.priceUSD} per ${material.unit}.`,
             });
+        } else {
+            return res.json({
+                reply: `Sorry, I couldn't find the price for "${materialName}".`,
+            });
         }
     }
 
@@ -46,9 +50,9 @@ router.post('/', async (req: Request, res: Response) => {
         const reply =
             completion.choices[0]?.message?.content ||
             "Sorry, I couldn't find an answer.";
-        res.json({ reply });
+        return res.json({ reply });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to process chatbot request.' });
+        return res.status(500).json({ error: 'Failed to process chatbot request.' });
     }
 });
 
