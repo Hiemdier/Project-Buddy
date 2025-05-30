@@ -33,6 +33,7 @@ export default function CreateProjectPage() {
     localStorage.setItem('projects', JSON.stringify(updatedProjects));
 
     console.log('Project saved:', project);
+    window.alert('Project Created');
         // Will replace with GraphQL mutation
     };
 
