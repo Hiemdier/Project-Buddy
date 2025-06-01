@@ -12,9 +12,9 @@ interface IUnitCoverage {
     sqft: number;
 }
 
-interface IMaterial extends Document {
-    name: string;
-    category: 'fencing' | 'paint' | 'drywall' | 'lumber' | 'concrete' | 'roofing' | 'plumbing' | 'electrical' | 'flooring' | 'insulation' | 'decking' | 'stain' | 'landscaping' | 'hardware' | 'tools' | 'HVAC' | 'siding' | 'masonry';
+export interface IMaterial extends Document {
+    category: string;
+    name: 'fencing' | 'paint' | 'drywall' | 'lumber' | 'concrete' | 'roofing' | 'plumbing' | 'electrical' | 'flooring' | 'insulation' | 'decking' | 'stain' | 'landscaping' | 'hardware' | 'tools' | 'HVAC' | 'siding' | 'masonry' | 'steel' | 'wood';
     unit: string;  
     unitCoverage: IUnitCoverage;
     quantity: number;
@@ -25,13 +25,13 @@ interface IMaterial extends Document {
 
 
 const materialSchema = new Schema<IMaterial>({
-  name: {
+  category: {
     type: String,
     required: true
   },
-  category: {
+  name: {
     type: String,
-    enum: ['fencing', 'paint', 'drywall', 'lumber', 'concrete', 'roofing', 'plumbing', 'electrical', 'flooring', 'insulation', 'decking', 'stain', 'landscaping', 'hardware', 'tools', 'HVAC', 'siding', 'masonry'], // Add other categories as needed
+    enum: ['fencing', 'paint', 'drywall', 'lumber', 'concrete', 'roofing', 'plumbing', 'electrical', 'flooring', 'insulation', 'decking', 'stain', 'landscaping', 'hardware', 'tools', 'HVAC', 'siding', 'masonry', 'steel', 'wood'], // Add other categories as needed
     required: true
   },
   unit: {

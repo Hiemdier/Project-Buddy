@@ -70,7 +70,7 @@ export default function CreateProjectPage() {
             ...project,
             userId: user.data._id,
             budget: totalBudget,
-            materialIds: project.materials.map(m => m.id),
+            materialIds: project.materials,
             budgetItems: project.materials.map(material => ({
                 name: material.name,
                 estimatedCost: material.cost * material.quantity,
@@ -85,7 +85,7 @@ console.log(projectData);
             
            
             console.log('Project created:', data.createProject);
-            navigate('/projects');
+            navigate('/listprojectspage');
         } catch (error) {
             console.error('Error creating project:', error);
         }
@@ -99,7 +99,6 @@ console.log(projectData);
             materials: [
                 ...prev.materials,
                 {
-                    id: Date.now().toString(),
                     name: calculatorResult.material,
                     quantity: calculatorResult.quantity,
                     unit: 'pieces',
@@ -167,9 +166,8 @@ console.log(projectData);
                                 setProject((prev) => ({
                                     ...prev,
                                     materials: materials.map((material) => ({
-                                        ...material,
-                                        category: material.category || 'default', // Provide a default category if missing
-                                    })),
+                                        ...material
+                                    }))
                                 }))
                             }
                         />

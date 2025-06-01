@@ -2,12 +2,11 @@ import React from 'react';
 
 interface MaterialInputProps {
   materials: Array<{
-    id: string;
     name: string;
     quantity: number;
     unit: 'sqft' | 'pieces' | 'gallons';
     cost: number;
-    category?: string; 
+    category: string; 
   }>;
   onMaterialsChange: (
     materials: MaterialInputProps['materials']
@@ -22,31 +21,33 @@ export default function MaterialInput({
     onMaterialsChange([
       ...materials,
       {
-        id: Date.now().toString(),
-        name: '',
+        name: 'concrete',
         quantity: 1,
         unit: 'pieces',
         cost: 0,
+        category: 'construction', // Default category, can be changed later
       },
     ]);
   };
 
-  const updateMaterial = (id: string, field: keyof MaterialInputProps['materials'][0], value: any) => {
+  const updateMaterial = (idx: number, field: keyof MaterialInputProps['materials'][0], value: any) => {
     onMaterialsChange(
       materials.map((material) =>
-        material.id === id ? { ...material, [field]: value } : material
+        idx === materials.indexOf(material)
+          ? { ...material, [field]: value }
+          : material
       )
     );
   };
-
+console.log(materials);
   return (
     <div className="materials">
-      {materials.map((material) => (
-        <div key={material.id}>
+      {materials.map((material, idx) => (
+        <div key={idx}>
      <select 
             value={material.name}
             onChange={(e) =>
-              updateMaterial(material.id, 'name', e.target.value)
+              updateMaterial(idx, 'name', e.target.value)
             }
             className="material-select"
             >
@@ -75,7 +76,7 @@ export default function MaterialInput({
             type="number"
             value={material.quantity}
             onChange={(e) =>
-              updateMaterial(material.id, 'quantity', Number(e.target.value))
+              updateMaterial(idx, 'quantity', Number(e.target.value))
             }
             min="1"
           />

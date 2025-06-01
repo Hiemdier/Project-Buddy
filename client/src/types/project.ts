@@ -26,7 +26,6 @@ export interface Project {
 }
 
 export interface Material {
-    id: string;
     name: string;
     quantity: number;
     unit: 'pieces' | 'sqft' | 'gallons';

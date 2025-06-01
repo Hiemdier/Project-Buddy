@@ -1,6 +1,6 @@
 import BudgetItem from '../models/BudgetItem.js';
 import Project from '../models/Projects.js';
-import Material from '../models/Material.js';
+import Material, { IMaterial } from '../models/Material.js';
 import Task from '../models/Task.js';
 import User from '../models/User.js';
 import { signToken } from '../utils/auth.js';
@@ -90,7 +90,7 @@ const resolvers = {
         getAllBudgetItems: async () => BudgetItem.find(),
         getBudgetItemById: async (_: any, { id }: { id: string }) => BudgetItem.findById(id),
 
-        getAllProjects: async () => Project.find(),
+        getAllProjects: async () => Project.find().populate('materialIds'),
         getProjectById: async (_: any, { id }: { id: string }) => {
             const project = await Project.findById(id).populate('materialIds');
             if (!project) {
@@ -191,11 +191,26 @@ const resolvers = {
                 estimatedBudget: number,
                 dueDate: string,
                 type: string,
-                materialIds?: string[]
+                materialIds?: IMaterial[] 
             }) => {
-            const newProject = new Project(args);
+            const materialsToCreate = args.materialIds
+
+            const newMaterialsIds = (await Material.insertMany(materialsToCreate)).map(newMaterial => newMaterial._id);
+            console.log(newMaterialsIds);
+            const projectData = {
+                title: args.title,
+                description: args.description,
+                userId: args.userId,
+                dimensions: args.dimensions,
+                estimatedBudget: args.estimatedBudget,
+                dueDate: args.dueDate,
+                type: args.type,
+                materialIds: newMaterialsIds
+            };
+            
+            const newProject = new Project(projectData);
             await newProject.save();
-            return newProject;
+            return (newProject);
         },
         updateProject: async (_: any, args: 
             { 

@@ -76,6 +76,14 @@ const typeDefs = `
         vendor: String
         lastUpdated: String
     }
+    
+    input MaterialInput {
+        name: String!
+        category: String!
+        unit: String!
+        quantity: Int
+        cost: Int
+    }
 
     type Task {
         _id: ID!
@@ -136,7 +144,7 @@ const typeDefs = `
             dimensions: DimensionsInput,
             estimatedBudget: Float,
             dueDate: String,
-            materialIds: [ID],
+            materialIds: [MaterialInput],
             userId: ID!
         ): Project
         updateProject(
