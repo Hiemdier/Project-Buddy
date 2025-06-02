@@ -35,6 +35,7 @@ interface Project {
     title: string;
     description?: string;
     type: string;
+    status?: 'planning' | 'in-progress' | 'completed' | 'not-started';
     dimensions: Dimensions;
     estimatedBudget: number;
     actualBudget?: number;
@@ -228,6 +229,7 @@ const resolvers = {
                 title: string, 
                 description: string, 
                 type: string, 
+                status?: 'planning' | 'in-progress' | 'completed' | 'not-started',
                 materialIds?: string[], 
                 actualBudget?: number,
                 dimensions: Dimensions, 

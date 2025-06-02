@@ -34,6 +34,7 @@ const typeDefs = `
         title: String!
         description: String
         type: String
+        status: String
         dimensions: Dimensions
         estimatedBudget: Float
         actualBudget: Float
@@ -147,6 +148,7 @@ const typeDefs = `
             title: String!,
             description: String,
             type: String,
+            status: String,
             dimensions: DimensionsInput,
             actualBudget: Float,
             dueDate: String,

@@ -4,6 +4,7 @@ interface IProject extends Document {
     title: string;
     description?: string;
     type: string;
+    status?: 'planning' | 'in-progress' | 'completed' | 'not-started';
     dimensions: {
         length: number;
         width: number;
@@ -28,6 +29,11 @@ const projectSchema = new Schema<IProject>({
     },
     type: {
         type: String,
+    },
+    status: {
+        type: String,
+        enum: ['planning', 'in-progress', 'completed', 'not-started'],
+        default: 'planning',
     },
     dimensions: {
         length: {

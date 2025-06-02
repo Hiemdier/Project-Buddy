@@ -189,7 +189,7 @@ export default function ListProjectsPage() {
                                     <ProjectCard
                                         id={project._id || idx.toString()}
                                         name={project.title}
-                                        budget={project.estimatedBudget || 0}
+                                        budget={project.estimatedBudget}
                                         status={
                                             (project.status as
                                                 | 'planning'
