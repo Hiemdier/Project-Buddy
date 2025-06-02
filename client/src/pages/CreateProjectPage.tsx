@@ -139,8 +139,8 @@ export default function CreateProjectPage() {
 
           <label>
             Type
-            <input
-              type="text"
+            Type
+            <select
               value={project.type || ''}
               onChange={(e) =>
                 setProject({
@@ -148,8 +148,17 @@ export default function CreateProjectPage() {
                   type: e.target.value,
                 })
               }
-              placeholder="e.g. Furniture, Renovation"
-            />
+              required
+            >
+              <option value="">Select project type</option>
+              <option value="Furniture">Furniture</option>
+              <option value="Renovation">Renovation</option>
+              <option value="Landscaping">Landscaping</option>
+              <option value="Electrical">Electrical</option>
+              <option value="Plumbing">Plumbing</option>
+              <option value="Painting">Painting</option>
+              <option value="Custom">Custom</option>
+            </select>
           </label>
           <br />
 
